@@ -60,16 +60,26 @@ function scrollToEl(el) {
   if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
+function pastelBg(hex) {
+  // clareia um hex em direção ao branco, para uso como fundo de chip
+  const n = parseInt(hex.replace("#", ""), 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  const amount = 0.85;
+  const nr = Math.round(r + (255 - r) * amount);
+  const ng = Math.round(g + (255 - g) * amount);
+  const nb = Math.round(b + (255 - b) * amount);
+  return `rgb(${nr}, ${ng}, ${nb})`;
+}
+
+function areaChip(area) {
+  return `<span class="chip chip-area" style="background:${pastelBg(area.cor)};color:${area.cor}">${area.nome}</span>`;
+}
+
 /* ---------------- Legend ---------------- */
 
 function buildAreaLegend() {
   const el = document.getElementById("area-legend");
-  el.innerHTML = DATA.areas
-    .map(
-      (a) =>
-        `<span class="area-legend-item"><span class="area-legend-swatch" style="background:${a.cor}"></span>${a.nome}</span>`
-    )
-    .join("");
+  el.innerHTML = DATA.areas.map((a) => areaChip(a)).join("");
 }
 
 /* ---------------- Modo 1: Estrutura do Curso ---------------- */
@@ -79,10 +89,13 @@ function buildAreasRow() {
     .map((a) => {
       const count = disciplinasDaArea(a.id).length;
       return `
-      <button class="area-card" data-area="${a.id}" style="background:${a.cor}">
-        ${a.nome}
+      <button class="area-card" data-area="${a.id}">
+        <span class="area-card-top">
+          <span class="area-dot" style="background:${a.cor}"></span>
+          <span class="area-name">${a.nome}</span>
+          <span class="chevron">⌄</span>
+        </span>
         <span class="area-count">${count} disciplina(s)</span>
-        <span class="chevron">▾</span>
       </button>`;
     })
     .join("");
@@ -127,11 +140,12 @@ function renderAreaExpansion() {
           .map((d) => {
             const periodoTxt = d.periodo ? `${d.periodo}º período` : d.periodoTipico || "";
             return `
-          <button class="discipline-chip ${d.tipo === "optativa" ? "optativa" : ""}" style="--chip-color:${area.cor}" data-disc="${d.id}">
-            ${d.nome}
-            <span class="chip-meta">
-              <span class="chip-badge">${d.cargaHoraria}h</span>
-              <span class="chip-badge">${periodoTxt}</span>
+          <button class="disc-card ${d.tipo === "optativa" ? "optativa" : ""}" data-disc="${d.id}">
+            <span class="disc-card-title">${d.nome}</span>
+            <span class="disc-card-tags">
+              ${areaChip(area)}
+              <span class="chip chip-muted">${d.cargaHoraria}h</span>
+              <span class="chip chip-muted">${periodoTxt}</span>
             </span>
           </button>`;
           })
@@ -180,7 +194,7 @@ function renderRoadmap(careerId) {
     ${aggInfo}
     <div class="meta-row">
       <span class="meta-chip">${related.length} disciplina(s) na trilha</span>
-      <button id="trocar-carreira" class="btn-secondary">🔁 Ver outra carreira</button>
+      <button id="trocar-carreira" class="btn-secondary">Ver outra carreira</button>
     </div>
   `;
   document.getElementById("trocar-carreira").addEventListener("click", () => {
@@ -221,7 +235,6 @@ function renderRoadmap(careerId) {
 }
 
 function renderPeriodSection(label, discs, careerId, isFirst, isOptativas) {
-  const area = null;
   return `
     <div class="period-section ${isOptativas ? "optativas-section" : ""}">
       ${isFirst ? "" : '<div class="period-connector"></div>'}
@@ -232,11 +245,11 @@ function renderPeriodSection(label, discs, careerId, isFirst, isOptativas) {
             const a = areaById[d.areaId];
             const peso = pesoDaCarreira(d, careerId);
             return `
-          <button class="roadmap-disc-card ${d.tipo === "optativa" ? "optativa" : ""}" style="--chip-color:${a.cor}" data-disc="${d.id}">
-            ${d.nome}
-            <span class="chip-meta">
-              <span class="chip-badge">${a.nome}</span>
-              <span class="chip-badge">${peso === "forte" ? "chave" : "apoio"}</span>
+          <button class="disc-card ${d.tipo === "optativa" ? "optativa" : ""}" data-disc="${d.id}">
+            <span class="disc-card-title">${d.nome}</span>
+            <span class="disc-card-tags">
+              ${areaChip(a)}
+              <span class="chip chip-muted">${peso === "forte" ? "chave" : "apoio"}</span>
             </span>
           </button>`;
           })
@@ -253,13 +266,13 @@ function selectDisciplina(id) {
   const carreiras = (disc.carreiras || []).map((rel) => ({ ...careerById[rel.carreiraId], peso: rel.peso }));
 
   detailsContent.innerHTML = `
-    <span class="details-type" style="border-color:${area.cor};color:${area.cor}">Disciplina · ${tipoLabel(disc.tipo)}</span>
+    <span class="details-type" style="background:${pastelBg(area.cor)};color:${area.cor}">Disciplina · ${tipoLabel(disc.tipo)}</span>
     <h3>${disc.nome}</h3>
     <p>${disc.descricao}</p>
     <div class="meta-row">
-      <span class="meta-chip">${disc.cargaHoraria}h</span>
-      <span class="meta-chip">${disc.periodo ? disc.periodo + "º período" : disc.periodoTipico || ""}</span>
-      <span class="meta-chip"><button data-goto-area="${area.id}" style="color:inherit;background:none;border:none;padding:0;cursor:pointer;">${area.nome}</button></span>
+      <span class="chip chip-muted">${disc.cargaHoraria}h</span>
+      <span class="chip chip-muted">${disc.periodo ? disc.periodo + "º período" : disc.periodoTipico || ""}</span>
+      <button class="chip chip-link" data-goto-area="${area.id}">${area.nome}</button>
     </div>
     ${
       disc.prerequisitos && disc.prerequisitos.length

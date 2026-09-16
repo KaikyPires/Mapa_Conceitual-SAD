@@ -6,6 +6,9 @@
 <title>Mapa Conceitual — Sistemas de Informação (IFMG Ouro Branco)</title>
 <meta name="description" content="Mapa mental interativo do curso de Bacharelado em Sistemas de Informação do IFMG Campus Ouro Branco: áreas, disciplinas e carreiras." />
 <link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -25,25 +28,27 @@
 
 <section id="intro" class="intro">
   <div class="intro-inner">
-    <p>
-      O <strong>Bacharelado em Sistemas de Informação</strong> do IFMG Campus Ouro Branco é um curso
-      <strong>noturno</strong>, organizado em <strong>8 semestres</strong>, com carga horária total de
-      <strong>3.004 horas</strong> (disciplinas obrigatórias, optativas, Projeto Integrador e Atividades
-      Complementares). Ele forma profissionais capazes de projetar, desenvolver, implantar e gerir sistemas
-      de informação, combinando programação, matemática, infraestrutura, engenharia de software e gestão.
-    </p>
-    <p>
-      Use a aba <strong>"Estrutura do Curso"</strong> para explorar as áreas e disciplinas do curso, ou a aba
-      <strong>"Trilhas de Carreira"</strong> para ver, uma de cada vez, a cadeia de disciplinas que mais contribui
-      para cada possibilidade profissional citada no PPC.
-    </p>
-    <button id="close-intro" class="btn-ghost small">Fechar ▲</button>
+    <div class="intro-card">
+      <p>
+        O <strong>Bacharelado em Sistemas de Informação</strong> do IFMG Campus Ouro Branco é um curso
+        <strong>noturno</strong>, organizado em <strong>8 semestres</strong>, com carga horária total de
+        <strong>3.004 horas</strong> (disciplinas obrigatórias, optativas, Projeto Integrador e Atividades
+        Complementares). Ele forma profissionais capazes de projetar, desenvolver, implantar e gerir sistemas
+        de informação, combinando programação, matemática, infraestrutura, engenharia de software e gestão.
+      </p>
+      <p>
+        Use a aba <strong>"Estrutura do Curso"</strong> para explorar as áreas e disciplinas do curso, ou a aba
+        <strong>"Trilhas de Carreira"</strong> para ver, uma de cada vez, a cadeia de disciplinas que mais contribui
+        para cada possibilidade profissional citada no PPC.
+      </p>
+      <button id="close-intro" class="btn-ghost small">Fechar</button>
+    </div>
   </div>
 </section>
 
 <nav class="tabs">
-  <button class="tab-btn active" data-tab="estrutura">📚 Estrutura do Curso</button>
-  <button class="tab-btn" data-tab="trilhas">🧭 Trilhas de Carreira</button>
+  <button class="tab-btn active" data-tab="estrutura">Estrutura do Curso</button>
+  <button class="tab-btn" data-tab="trilhas">Trilhas de Carreira</button>
 </nav>
 
 <div class="app">
