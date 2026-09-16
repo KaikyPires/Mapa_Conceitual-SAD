@@ -18,8 +18,6 @@ const areaExpandPanel = document.getElementById("area-expand-panel");
 const careersMenu = document.getElementById("careers-menu");
 const roadmapHeader = document.getElementById("roadmap-header");
 const roadmapContent = document.getElementById("roadmap-content");
-const searchInput = document.getElementById("search-input");
-const searchResults = document.getElementById("search-results");
 
 init();
 
@@ -73,6 +71,10 @@ function pastelBg(hex) {
 
 function areaChip(area) {
   return `<span class="chip chip-area" style="background:${pastelBg(area.cor)};color:${area.cor}">${area.nome}</span>`;
+}
+
+function optativaTag(disc) {
+  return disc.tipo === "optativa" ? `<span class="chip chip-optativa-tag">Optativa</span>` : "";
 }
 
 /* ---------------- Legend ---------------- */
@@ -143,6 +145,7 @@ function renderAreaExpansion() {
           <button class="disc-card ${d.tipo === "optativa" ? "optativa" : ""}" data-disc="${d.id}">
             <span class="disc-card-title">${d.nome}</span>
             <span class="disc-card-tags">
+              ${optativaTag(d)}
               ${areaChip(area)}
               <span class="chip chip-muted">${d.cargaHoraria}h</span>
               <span class="chip chip-muted">${periodoTxt}</span>
@@ -194,12 +197,8 @@ function renderRoadmap(careerId) {
     ${aggInfo}
     <div class="meta-row">
       <span class="meta-chip">${related.length} disciplina(s) na trilha</span>
-      <button id="trocar-carreira" class="btn-secondary">Ver outra carreira</button>
     </div>
   `;
-  document.getElementById("trocar-carreira").addEventListener("click", () => {
-    scrollToEl(document.querySelector(".careers-list"));
-  });
 
   const comPeriodo = related.filter((d) => d.periodo != null).sort((a, b) => a.periodo - b.periodo);
   const semPeriodo = related.filter((d) => d.periodo == null);
@@ -248,6 +247,7 @@ function renderPeriodSection(label, discs, careerId, isFirst, isOptativas) {
           <button class="disc-card ${d.tipo === "optativa" ? "optativa" : ""}" data-disc="${d.id}">
             <span class="disc-card-title">${d.nome}</span>
             <span class="disc-card-tags">
+              ${optativaTag(d)}
               ${areaChip(a)}
               <span class="chip chip-muted">${peso === "forte" ? "chave" : "apoio"}</span>
             </span>
@@ -356,57 +356,7 @@ function wireControls() {
     btn.addEventListener("click", () => switchTab(btn.getAttribute("data-tab")));
   });
 
-  document.getElementById("toggle-intro").addEventListener("click", () => {
-    document.getElementById("intro").classList.toggle("collapsed");
-  });
   document.getElementById("close-intro").addEventListener("click", () => {
     document.getElementById("intro").classList.add("collapsed");
-  });
-
-  document.getElementById("close-details").addEventListener("click", () => {
-    detailsContent.innerHTML = `<p class="details-placeholder">Clique em uma área, disciplina ou carreira para ver os detalhes aqui.</p>`;
-  });
-
-  searchInput.addEventListener("input", () => {
-    const q = searchInput.value.trim().toLowerCase();
-    if (!q) {
-      searchResults.innerHTML = "";
-      return;
-    }
-    const matches = [];
-    DATA.disciplinas
-      .filter((d) => d.tipo !== "slot-optativa")
-      .forEach((d) => {
-        if (d.nome.toLowerCase().includes(q)) matches.push({ id: d.id, nome: d.nome, tag: "Disciplina" });
-      });
-    DATA.carreiras.forEach((c) => {
-      if (c.nome.toLowerCase().includes(q)) matches.push({ id: c.id, nome: c.nome, tag: "Carreira" });
-    });
-    DATA.areas.forEach((a) => {
-      if (a.nome.toLowerCase().includes(q)) matches.push({ id: a.id, nome: a.nome, tag: "Área" });
-    });
-
-    searchResults.innerHTML = matches
-      .slice(0, 15)
-      .map((m) => `<div class="search-result-item" data-id="${m.id}" data-tag="${m.tag}"><span>${m.nome}</span><span class="tag">${m.tag}</span></div>`)
-      .join("");
-
-    searchResults.querySelectorAll("[data-id]").forEach((row) => {
-      row.addEventListener("click", () => {
-        const id = row.getAttribute("data-id");
-        const tag = row.getAttribute("data-tag");
-        if (tag === "Disciplina") goToDisciplina(id);
-        else if (tag === "Área") {
-          switchTab("estrutura");
-          expandedAreaId = id;
-          renderAreaExpansion();
-          scrollToEl(areaExpandPanel);
-        } else if (tag === "Carreira") {
-          selectCareerDetailsShortcut(id);
-        }
-        searchResults.innerHTML = "";
-        searchInput.value = "";
-      });
-    });
   });
 }
