@@ -268,7 +268,7 @@ function selectDisciplina(id) {
   detailsContent.innerHTML = `
     <span class="details-type" style="background:${pastelBg(area.cor)};color:${area.cor}">Disciplina · ${tipoLabel(disc.tipo)}</span>
     <h3>${disc.nome}</h3>
-    <p>${disc.descricao}</p>
+    <p class="details-desc">${disc.descricao}</p>
     <div class="meta-row">
       <span class="chip chip-muted">${disc.cargaHoraria}h</span>
       <span class="chip chip-muted">${disc.periodo ? disc.periodo + "º período" : disc.periodoTipico || ""}</span>
@@ -276,17 +276,26 @@ function selectDisciplina(id) {
     </div>
     ${
       disc.prerequisitos && disc.prerequisitos.length
-        ? `<p><strong>Pré-requisito(s):</strong></p><ul>${disc.prerequisitos
-            .map((p) => `<li><button data-goto-disc="${p}">${discById[p]?.nome || p}</button></li>`)
-            .join("")}</ul>`
+        ? `<div class="details-section">
+            <h4 class="details-section-title">Pré-requisito(s)</h4>
+            <ul class="details-list">${disc.prerequisitos
+              .map((p) => `<li><button data-goto-disc="${p}">${discById[p]?.nome || p}</button></li>`)
+              .join("")}</ul>
+          </div>`
         : ""
     }
     ${
       carreiras.length
-        ? `<p><strong>Contribui para as carreiras:</strong></p><ul>${carreiras
-            .map((c) => `<li><button data-goto-career="${c.id}">${c.nome}</button> <em style="color:var(--text-dim);font-size:0.75rem;">(${c.peso})</em></li>`)
-            .join("")}</ul>`
-        : `<p><em>Disciplina de formação de base, sem ligação direta com uma carreira específica no mapa.</em></p>`
+        ? `<div class="details-section">
+            <h4 class="details-section-title">Contribui para as carreiras</h4>
+            <ul class="details-list">${carreiras
+              .map(
+                (c) =>
+                  `<li><button data-goto-career="${c.id}">${c.nome}</button><span class="chip chip-muted">${c.peso}</span></li>`
+              )
+              .join("")}</ul>
+          </div>`
+        : `<p class="details-desc"><em>Disciplina de formação de base, sem ligação direta com uma carreira específica no mapa.</em></p>`
     }
   `;
   wireDetailsLinks();

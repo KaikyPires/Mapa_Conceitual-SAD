@@ -1,7 +1,7 @@
 :root {
-  --bg: #FAFAFA;
+  --bg: #EFF1F3;
   --bg-card: #FFFFFF;
-  --bg-alt: #F3F4F6;
+  --bg-alt: #EEF0F2;
   --border: #E5E7EB;
   --border-strong: #D1D5DB;
   --text: #1F2937;
@@ -185,9 +185,10 @@ button { font-family: inherit; }
 .details-panel {
   background: var(--bg-card);
   border-left: 1px solid var(--border);
-  padding: 1.25rem;
+  padding: 1.5rem;
   overflow-y: auto;
 }
+.details-panel #close-details { margin-bottom: 1.1rem; }
 
 /* ---------- Modo 1: Estrutura do Curso ---------- */
 .course-root { display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem; }
@@ -307,15 +308,14 @@ button { font-family: inherit; }
 }
 .chip-muted { background: var(--bg-alt); color: var(--text-dim); }
 .chip-link {
-  background: none;
-  border: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   color: var(--accent-dark);
   cursor: pointer;
-  padding: 0.15rem 0;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
-.chip-link:hover { text-decoration: underline; }
+.chip-link:hover { border-color: var(--accent); text-decoration: underline; }
 
 /* ---------- Modo 2: Trilhas de Carreira ---------- */
 .careers-list {
@@ -402,34 +402,68 @@ button { font-family: inherit; }
 .optativas-section .period-label { color: var(--accent-dark); background: var(--accent-pastel); }
 
 /* ---------- Details panel content ---------- */
-.details-content h3 { margin: 0.3rem 0 0.4rem; font-size: 1.1rem; color: var(--text); }
+.details-content h3 { margin: 0 0 0.6rem; font-size: 1.15rem; line-height: 1.35; color: var(--text); }
 .details-content .details-type {
   display: inline-block;
   font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 999px;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.9rem;
 }
-.details-content p { font-size: 0.88rem; line-height: 1.6; color: var(--text-dim); }
+.details-content p { font-size: 0.89rem; line-height: 1.6; color: var(--text-dim); margin: 0; }
 .details-content p strong { color: var(--text); font-weight: 600; }
-.details-content .meta-row { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; margin: 0.6rem 0; }
+.details-content .details-desc { margin-bottom: 1.1rem; }
+
+.details-content .meta-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-bottom: 1.3rem;
+  margin-bottom: 1.3rem;
+  border-bottom: 1px solid var(--border-strong);
+}
 .meta-chip {
   font-size: 0.75rem;
   background: var(--bg-alt);
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 999px;
   color: var(--text-dim);
 }
-.details-content ul { padding-left: 0; margin: 0.4rem 0 0.8rem; list-style: none; }
-.details-content li { font-size: 0.86rem; margin-bottom: 0.4rem; color: var(--text); }
-.details-content li button {
-  background: none; border: none; color: var(--accent-dark);
-  cursor: pointer; font-size: 0.86rem; padding: 0; text-align: left; font-weight: 500;
+
+.details-section { margin-bottom: 1.4rem; }
+.details-section:last-child { margin-bottom: 0; }
+.details-section-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+  margin: 0 0 0.6rem;
 }
-.details-content li button:hover { text-decoration: underline; }
+
+.details-list { padding-left: 0; margin: 0; list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.details-list li {
+  background: var(--bg-alt);
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-size: 0.86rem;
+  color: var(--text);
+}
+.details-list li button {
+  background: none; border: none; color: var(--accent-dark);
+  cursor: pointer; font-size: 0.86rem; padding: 0; text-align: left; font-weight: 600;
+}
+.details-list li button:hover { text-decoration: underline; }
+.details-list li .chip { flex: 0 0 auto; }
+.details-list li .chip-muted { background: var(--bg-card); }
 .details-placeholder { color: var(--text-dim); font-size: 0.88rem; }
 
 /* ---------- Legend bar ---------- */
