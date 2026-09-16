@@ -13,7 +13,13 @@
 <header class="topbar">
   <div class="topbar-inner">
     <h1>Mapa Conceitual — Sistemas de Informação<span>IFMG · Campus Ouro Branco</span></h1>
-    <button id="toggle-intro" class="btn-ghost" aria-expanded="true" aria-controls="intro">Sobre o curso</button>
+    <div class="topbar-actions">
+      <div class="search-box">
+        <input id="search-input" type="text" placeholder="Buscar disciplina ou carreira…" autocomplete="off" />
+        <div id="search-results" class="search-results"></div>
+      </div>
+      <button id="toggle-intro" class="btn-ghost" aria-expanded="true" aria-controls="intro">Sobre o curso</button>
+    </div>
   </div>
 </header>
 
@@ -27,71 +33,47 @@
       de informação, combinando programação, matemática, infraestrutura, engenharia de software e gestão.
     </p>
     <p>
-      Este mapa organiza as disciplinas do PPC (Projeto Pedagógico de Curso) em <strong>áreas de conhecimento</strong>
-      e mostra como cada uma se conecta às <strong>possibilidades de carreira</strong> do egresso. Clique em uma
-      carreira para destacar sua trilha de disciplinas, ou explore livremente o grafo completo.
+      Use a aba <strong>"Estrutura do Curso"</strong> para explorar as áreas e disciplinas do curso, ou a aba
+      <strong>"Trilhas de Carreira"</strong> para ver, uma de cada vez, a cadeia de disciplinas que mais contribui
+      para cada possibilidade profissional citada no PPC.
     </p>
     <button id="close-intro" class="btn-ghost small">Fechar ▲</button>
   </div>
 </section>
 
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="estrutura">📚 Estrutura do Curso</button>
+  <button class="tab-btn" data-tab="trilhas">🧭 Trilhas de Carreira</button>
+</nav>
+
 <div class="app">
-  <aside class="sidebar">
-    <div class="control-group">
-      <label for="search-input">Buscar disciplina ou carreira</label>
-      <input id="search-input" type="text" placeholder="Ex.: Banco de Dados, Programador…" autocomplete="off" />
-      <div id="search-results" class="search-results"></div>
-    </div>
 
-    <div class="control-group">
-      <label for="career-select">Destacar trilha de carreira</label>
-      <select id="career-select">
-        <option value="">— Ver mapa completo —</option>
-      </select>
-    </div>
-
-    <div class="control-group toggle-row">
-      <label class="checkbox-label">
-        <input type="checkbox" id="isolate-toggle" />
-        Isolar trilha selecionada (ocultar o resto)
-      </label>
-    </div>
-
-    <div class="control-group">
-      <button id="reset-view" class="btn-secondary">Redefinir visualização</button>
-    </div>
-
-    <div class="control-group legend">
-      <h2>Legenda</h2>
-      <div class="legend-item">
-        <span class="legend-swatch legend-area"></span>
-        <div>
-          <strong>Área</strong>
-          <p>Grande agrupamento temático de disciplinas do curso.</p>
-        </div>
+  <!-- MODO 1: ESTRUTURA DO CURSO -->
+  <main id="mode-estrutura" class="mode-panel active">
+    <div class="course-root">
+      <div class="course-root-box">
+        <strong>Bacharelado em Sistemas de Informação</strong>
+        <span>IFMG Ouro Branco · 8 semestres · 3.004h · Noturno</span>
       </div>
-      <div class="legend-item">
-        <span class="legend-swatch legend-disc"></span>
-        <div>
-          <strong>Disciplina</strong>
-          <p>Cor herdada da área; borda tracejada = optativa.</p>
-        </div>
-      </div>
-      <div class="legend-item">
-        <span class="legend-swatch legend-career"></span>
-        <div>
-          <strong>Carreira</strong>
-          <p>Possibilidade profissional do egresso (losango dourado).</p>
-        </div>
-      </div>
-      <h2>Áreas do curso</h2>
-      <div id="area-legend" class="area-legend"></div>
+      <div class="root-connector"></div>
     </div>
-  </aside>
 
-  <main class="graph-wrap">
-    <div id="cy"></div>
-    <div class="graph-hint">Arraste para mover · role para zoom · clique num nó para detalhes</div>
+    <div id="areas-row" class="areas-row"></div>
+    <div id="area-expand-panel" class="area-expand-panel"></div>
+  </main>
+
+  <!-- MODO 2: TRILHAS DE CARREIRA -->
+  <main id="mode-trilhas" class="mode-panel">
+    <aside class="careers-list">
+      <h2>Carreiras do PPC</h2>
+      <div id="careers-menu" class="careers-menu"></div>
+    </aside>
+    <section class="roadmap-area">
+      <div id="roadmap-header" class="roadmap-header">
+        <p class="details-placeholder">← Selecione uma carreira para ver a trilha de disciplinas.</p>
+      </div>
+      <div id="roadmap-content" class="roadmap-content"></div>
+    </section>
   </main>
 
   <aside id="details-panel" class="details-panel" aria-live="polite">
@@ -102,14 +84,22 @@
   </aside>
 </div>
 
+<section class="legend-bar">
+  <div class="legend-bar-inner">
+    <span class="legend-title">Legenda:</span>
+    <span class="legend-chip"><span class="chip-swatch chip-solid"></span> disciplina obrigatória</span>
+    <span class="legend-chip"><span class="chip-swatch chip-dashed"></span> disciplina optativa</span>
+    <span class="legend-sep">·</span>
+    <span class="legend-title">Áreas:</span>
+    <div id="area-legend" class="area-legend"></div>
+  </div>
+</section>
+
 <footer class="site-footer">
   Trabalho individual — disciplina "Atividade Mapa Conceitual/Mental 2026" · Autor: <strong>Kaiky Pires</strong> ·
   Dados baseados no PPC do curso de Bacharelado em Sistemas de Informação (IFMG Campus Ouro Branco)
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.2/cytoscape.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.5.0/cytoscape-dagre.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
