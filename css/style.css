@@ -250,10 +250,11 @@ button { font-family: inherit; }
 }
 .chip-muted { background: var(--bg-alt); color: var(--text-dim); }
 .chip-optativa-tag {
-  background: transparent;
-  border: 1.5px dashed var(--border-strong);
-  color: var(--text-dim);
+  background: #EA580C;
+  border: none;
+  color: #FFFFFF;
   font-weight: 700;
+  letter-spacing: 0.02em;
 }
 .chip-link {
   background: var(--bg-card);
