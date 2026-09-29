@@ -1,18 +1,18 @@
 :root {
-  --bg: #EFF1F3;
+  --bg: #D5DBE2;
   --bg-card: #FFFFFF;
-  --bg-alt: #EEF0F2;
-  --border: #E5E7EB;
-  --border-strong: #D1D5DB;
-  --text: #1F2937;
-  --text-dim: #6B7280;
-  --text-faint: #9CA3AF;
-  --accent: #2E7D5B;
-  --accent-dark: #1F5C43;
-  --accent-pastel: #E6F2ED;
+  --bg-alt: #E8ECF2;
+  --border: #C9CFDA;
+  --border-strong: #A7B0BF;
+  --text: #111827;
+  --text-dim: #4B5563;
+  --text-faint: #6B7280;
+  --accent: #1F704C;
+  --accent-dark: #165338;
+  --accent-pastel: #DDF0E6;
   --radius: 10px;
-  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.06);
-  --shadow-md: 0 4px 10px rgba(16, 24, 40, 0.08);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.12);
   --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -90,26 +90,30 @@ button { font-family: inherit; }
 
 /* ---------- Tabs ---------- */
 .tabs {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+}
+.tabs-inner {
   display: flex;
-  gap: 1.6rem;
+  gap: 2.5rem;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 1.5rem;
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border);
 }
 .tab-btn {
   background: transparent;
   border: none;
-  border-bottom: 2px solid transparent;
+  border-bottom: 3px solid transparent;
   color: var(--text-dim);
-  padding: 0.9rem 0.1rem;
+  padding: 0.95rem 0.6rem;
   cursor: pointer;
-  font-size: 0.94rem;
+  font-size: 0.96rem;
   font-weight: 500;
   margin-bottom: -1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
-.tab-btn.active { color: var(--accent-dark); border-bottom-color: var(--accent); font-weight: 600; }
+.tab-btn.active { color: var(--accent-dark); border-bottom-color: var(--accent); font-weight: 700; }
 .tab-btn:hover:not(.active) { color: var(--text); }
 
 /* ---------- App layout ---------- */
