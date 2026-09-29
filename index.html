@@ -1,102 +1,87 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-<title>Mapa Conceitual — Sistemas de Informação (IFMG Ouro Branco)</title>
-<meta name="description" content="Mapa mental interativo do curso de Bacharelado em Sistemas de Informação do IFMG Campus Ouro Branco: áreas, disciplinas e carreiras." />
-<link rel="icon" href="data:,">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Mapa Conceitual — Sistemas de Informação (IFMG Ouro Branco)</title>
+  <meta name="description"
+    content="Mapa mental interativo do curso de Bacharelado em Sistemas de Informação do IFMG Campus Ouro Branco: áreas, disciplinas e carreiras." />
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <h1>Mapa Conceitual — Sistemas de Informação<span>IFMG · Campus Ouro Branco</span></h1>
-  </div>
-</header>
-
-<section id="intro" class="intro">
-  <div class="intro-inner">
-    <div class="intro-card">
-      <p>
-        O <strong>Bacharelado em Sistemas de Informação</strong> do IFMG Campus Ouro Branco é um curso
-        <strong>noturno</strong>, organizado em <strong>8 semestres</strong>, com carga horária total de
-        <strong>3.004 horas</strong> (disciplinas obrigatórias, optativas, Projeto Integrador e Atividades
-        Complementares). Ele forma profissionais capazes de projetar, desenvolver, implantar e gerir sistemas
-        de informação, combinando programação, matemática, infraestrutura, engenharia de software e gestão.
-      </p>
-      <p>
-        Use a aba <strong>"Estrutura do Curso"</strong> para explorar as áreas e disciplinas do curso, ou a aba
-        <strong>"Trilhas de Carreira"</strong> para ver, uma de cada vez, a cadeia de disciplinas que mais contribui
-        para cada possibilidade profissional citada no PPC.
-      </p>
-      <button id="close-intro" class="btn-ghost small">Fechar</button>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>Mapa Conceitual — Sistemas de Informação<span>IFMG · Campus Ouro Branco</span></h1>
     </div>
-  </div>
-</section>
+  </header>
 
-<nav class="tabs">
-  <button class="tab-btn active" data-tab="estrutura">Estrutura do Curso</button>
-  <button class="tab-btn" data-tab="trilhas">Trilhas de Carreira</button>
-</nav>
 
-<div class="app">
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="estrutura">Estrutura do Curso</button>
+    <button class="tab-btn" data-tab="trilhas">Trilhas de Carreira</button>
+  </nav>
 
-  <!-- MODO 1: ESTRUTURA DO CURSO -->
-  <main id="mode-estrutura" class="mode-panel active">
-    <div class="course-root">
-      <div class="course-root-box">
-        <strong>Bacharelado em Sistemas de Informação</strong>
-        <span>IFMG Ouro Branco · 8 semestres · 3.004h · Noturno</span>
+  <div class="app">
+
+    <!-- MODO 1: ESTRUTURA DO CURSO -->
+    <main id="mode-estrutura" class="mode-panel active">
+      <div class="course-root">
+        <div class="course-root-box">
+          <strong>Bacharelado em Sistemas de Informação</strong>
+          <span>IFMG Ouro Branco · 8 semestres · 3.004h · Noturno</span>
+        </div>
+        <div class="root-connector"></div>
       </div>
-      <div class="root-connector"></div>
-    </div>
 
-    <div id="areas-row" class="areas-row"></div>
-    <div id="area-expand-panel" class="area-expand-panel"></div>
-  </main>
+      <div id="areas-row" class="areas-row"></div>
+      <div id="area-expand-panel" class="area-expand-panel"></div>
+    </main>
 
-  <!-- MODO 2: TRILHAS DE CARREIRA -->
-  <main id="mode-trilhas" class="mode-panel">
-    <aside class="careers-list">
-      <h2>Carreiras do PPC</h2>
-      <div id="careers-menu" class="careers-menu"></div>
+    <!-- MODO 2: TRILHAS DE CARREIRA -->
+    <main id="mode-trilhas" class="mode-panel">
+      <aside class="careers-list">
+        <h2>Carreiras do PPC</h2>
+        <div id="careers-menu" class="careers-menu"></div>
+      </aside>
+      <section class="roadmap-area">
+        <div id="roadmap-header" class="roadmap-header">
+          <p class="details-placeholder">← Selecione uma carreira para ver a trilha de disciplinas.</p>
+        </div>
+        <div id="roadmap-content" class="roadmap-content"></div>
+      </section>
+    </main>
+
+    <aside id="details-panel" class="details-panel" aria-live="polite">
+      <div id="details-content" class="details-content">
+        <p class="details-placeholder">Clique em uma área, disciplina ou carreira para ver os detalhes aqui.</p>
+      </div>
     </aside>
-    <section class="roadmap-area">
-      <div id="roadmap-header" class="roadmap-header">
-        <p class="details-placeholder">← Selecione uma carreira para ver a trilha de disciplinas.</p>
-      </div>
-      <div id="roadmap-content" class="roadmap-content"></div>
-    </section>
-  </main>
-
-  <aside id="details-panel" class="details-panel" aria-live="polite">
-    <div id="details-content" class="details-content">
-      <p class="details-placeholder">Clique em uma área, disciplina ou carreira para ver os detalhes aqui.</p>
-    </div>
-  </aside>
-</div>
-
-<section class="legend-bar">
-  <div class="legend-bar-inner">
-    <span class="legend-title">Legenda:</span>
-    <span class="legend-chip"><span class="chip-swatch chip-solid"></span> disciplina obrigatória</span>
-    <span class="legend-chip"><span class="chip-swatch chip-dashed"></span> disciplina optativa</span>
-    <span class="legend-sep">·</span>
-    <span class="legend-title">Áreas:</span>
-    <div id="area-legend" class="area-legend"></div>
   </div>
-</section>
 
-<footer class="site-footer">
-  Trabalho individual — disciplina "Atividade Mapa Conceitual/Mental 2026" · Autor: <strong>Kaiky Pires</strong> ·
-  Dados baseados no PPC do curso de Bacharelado em Sistemas de Informação (IFMG Campus Ouro Branco)
-</footer>
+  <section class="legend-bar">
+    <div class="legend-bar-inner">
+      <span class="legend-title">Legenda:</span>
+      <span class="legend-chip"><span class="chip-swatch chip-solid"></span> disciplina obrigatória</span>
+      <span class="legend-chip"><span class="chip-swatch chip-dashed"></span> disciplina optativa</span>
+      <span class="legend-sep">·</span>
+      <span class="legend-title">Áreas:</span>
+      <div id="area-legend" class="area-legend"></div>
+    </div>
+  </section>
 
-<script src="js/main.js"></script>
+  <footer class="site-footer">
+    Trabalho individual — disciplina "Atividade Mapa Conceitual/Mental 2026" · Autor: <strong>Kaiky Pires</strong> ·
+    Dados baseados no PPC do curso de Bacharelado em Sistemas de Informação (IFMG Campus Ouro Branco)
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
+
 </html>
